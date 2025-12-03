@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES5",        // 编译为浏览器兼容的 ES5
+    "module": "ESNext",     // 模块规范
+    "outDir": "./dist",     // 编译后的 JS 文件输出到 dist 文件夹（避免和 TS 文件混在一起）
+    "strict": true,         // 开启严格类型检查（推荐）
+    "esModuleInterop": true // 兼容 CommonJS 模块
+  },
+  "include": ["src/**/*", "*.ts"], // 关键：匹配当前目录+src文件夹下所有 TS/TSX 文件
+  "exclude": ["node_modules"]      // 只排除 node_modules（默认也会排除，写出来更清晰）
+}
