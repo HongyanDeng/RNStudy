@@ -1,0 +1,393 @@
+import React, { useState } from 'react';
+import {
+    View, Text, Image,
+    TextInput, ScrollView,
+    FlatList, TouchableOpacity,
+    TouchableWithoutFeedback, Button,
+    Switch, ImageSourcePropType,
+    StyleSheet, NativeModules,
+    ImagePropsBase,
+    Alert,
+    Platform,
+} from 'react-native'
+//import end
+
+//interface begins
+//公司名称图标接口及其实现
+interface CompanyInfoProps {
+    title: string;
+    image: ImageSourcePropType
+}
+
+
+
+const CompanyInfo = ({ title, image }: CompanyInfoProps) => {
+    return (
+        <View style={styles.CompanyInfo}>
+            <Image source={image} style={styles.CompanyImageStyle} />
+            <Text style={styles.CompanyTitle}>
+                {title}
+            </Text>
+        </View>
+    )
+}
+
+//其他登录方式接口及其实现
+interface OtherLoginMethodsProps {
+    method: string;
+    image: ImageSourcePropType
+}
+
+const OtherLoginMethods = ({ method, image }: OtherLoginMethodsProps) => {
+    return (
+        <View style={styles.OtherLoginMethods}>
+            <Image source={image} style={styles.OtherLoginImageStyle} />
+        </View>
+    )
+}
+
+//styles begin
+const styles = StyleSheet.create({
+    LoginPageView: {
+        backgroundColor: '#eaecf2ff',
+        height: '100%',
+    },
+    KefuImageView: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        width: 35,
+        height: 35,
+        marginRight: '4%',
+        alignSelf: 'flex-end',
+        ...Platform.OS === 'ios' ?
+            {
+                marginTop: '10%',
+            } :
+            {
+                marginTop: '3%',
+            },
+    },
+    KefuImageStyle: {
+        alignSelf: 'center',
+        margin: 'auto',
+        width: 25,
+        height: 25,
+    },
+    CompanyInfo: {
+
+    },
+    CompanyImageStyle: {
+        width: 80,
+        height: 80,
+        marginTop: '15%',
+        //backgroundColor: 'red',
+        alignSelf: 'center',
+    },
+    CompanyTitle: {
+        fontSize: 20,
+        textAlign: 'center',
+        marginTop: 10,
+        fontWeight: 'bold',
+        color: 'black',
+        fontFamily: 'sense-serif',
+    },
+    MailAddressInput: {
+        backgroundColor: 'white',
+        marginTop: '15%',
+        width: '85%',
+        height: 60,
+        borderRadius: 10,
+        alignSelf: 'center',
+        margin: 12,
+        borderWidth: 1,
+        borderColor: 'rgba(109, 90, 90, 0)',
+        padding: 10,
+        fontSize: 18,
+    },
+    PasswordInput: {
+        backgroundColor: 'white',
+        marginTop: '2%',
+        width: '85%',
+        height: 60,
+        borderRadius: 10,
+        alignSelf: 'center',
+        margin: 12,
+        borderWidth: 1,
+        borderColor: 'rgba(109, 90, 90, 0)',
+        padding: 10,
+        fontSize: 18,
+    },
+    LoginViewButton: {
+        marginTop: '12%',
+        width: '85%',
+        height: 60,
+        borderRadius: 20,
+        backgroundColor: 'black',
+        alignSelf: 'center',
+
+    },
+    LoginButton: {
+        //backgroundColor: 'blue',
+        color: 'white',
+        //alignSelf: 'center',
+        //alignItems: 'center',
+        margin: 'auto',
+        fontSize: 20,
+        textAlign: 'center',
+        width: '90%',
+        height: 'auto',
+        padding: 13,
+    },
+    PasswordViewButton: {
+        flexDirection: 'row',
+        //marginTop: '3%',
+        //padding: 10,
+    },
+    ForgetPasswordButton: {
+        marginLeft: '7.5%',
+        color: 'black',
+        padding: 13,
+        //backgroundColor:'red'
+        fontSize: 16,
+
+    },
+    RegisterButton: {
+        padding: 13,
+        marginLeft: 'auto',
+        marginRight: '7.5%',
+        color: 'black',
+        //backgroundColor:'red'
+        fontSize: 16,
+    },
+    OtherLoginMethods: {
+        alignItems: 'center',
+        //backgroundColor: 'red',
+        height: 100,
+        marginTop: '5%',
+
+    },
+    OtherLoginTextView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 20
+
+    },
+    line: {
+        flex: 1,
+        height: 1,
+        backgroundColor: '#c6c3c3ff',
+        marginHorizontal: 12,
+    },
+    OtherLoginText: {
+        fontSize: 16
+
+    },
+    OtherLoginImageStyleView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 0
+    },
+    OtherLoginImageStyle: {
+        width: 50,
+        height: 50,
+        //marginTop: '35%',
+        marginLeft: '10%',
+        marginRight: '10%',
+        //backgroundColor: 'red',
+        alignSelf: 'center',
+    },
+    AgreementContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 70,
+        marginHorizontal: 40,
+    },
+    radioBox: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#999',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    checkIcon: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        backgroundColor: '#fff',
+    },
+    AgreementText: {
+        fontSize: 15,
+        color: '#333',
+        marginLeft: 8,
+    },
+
+})
+//styles end
+
+
+//function begins
+function App() {
+
+    const [string, onChangeAddress] = React.useState('');
+    const [number, onChangeNumber] = React.useState('');
+    const [isAgreed, setIsAgreed] = useState(false);
+
+    return Platform.OS === 'ios' ? (
+        <View style={styles.LoginPageView}>
+            <View style={styles.KefuImageView}>
+                <Image source={require('../assets/kefu.png')} style={styles.KefuImageStyle} />
+            </View>
+
+            <View style={styles.CompanyInfo}>
+                <CompanyInfo title="MAMMOTION" image={require('../assets/m.png')} />
+            </View>
+
+            <View>
+                <TextInput
+                    style={styles.MailAddressInput}
+                    onChangeText={onChangeAddress}
+                    value={string}
+                    placeholder="邮箱地址"
+                    keyboardType="numeric"
+                />
+                <TextInput
+                    style={styles.PasswordInput}
+                    onChangeText={onChangeNumber}
+                    value={number}
+                    placeholder="请输入密码"
+                    keyboardType="numeric"
+                />
+            </View>
+
+            <View style={styles.LoginViewButton}>
+                <Text style={styles.LoginButton} onPress={() => Alert.alert('登录成功！')}>
+                    登录
+                </Text>
+            </View>
+
+            <View style={styles.PasswordViewButton}>
+                <Text style={styles.ForgetPasswordButton} onPress={() => Alert.alert('密码重置成功！')}>
+                    忘记密码
+                </Text>
+                <Text style={styles.RegisterButton} onPress={() => Alert.alert('注册成功！')}>
+                    注册
+                </Text>
+            </View>
+
+            <View style={styles.OtherLoginMethods}>
+                <View style={styles.OtherLoginTextView}>
+                    <View style={styles.line} />
+                    <Text style={styles.OtherLoginText}>
+                        其他登录方式
+                    </Text>
+                    <View style={styles.line} />
+                </View>
+
+                <View style={styles.OtherLoginImageStyleView}>
+                    <OtherLoginMethods method="谷歌" image={require('../assets/guge.png')} />
+                    <OtherLoginMethods method="苹果" image={require('../assets/pingguo.png')} />
+                </View>
+            </View>
+
+            <View>
+                <TouchableOpacity
+                    style={styles.AgreementContainer}
+                    onPress={() => setIsAgreed(!isAgreed)}
+                    activeOpacity={0.8}
+                >
+                    <View style={styles.radioBox}>
+                        {isAgreed && (
+                            <Image
+                                source={require('../assets/agree.png')}
+                                style={styles.checkIcon}
+                                resizeMode="contain"
+                            />
+                        )}
+                    </View>
+                    <Text style={styles.AgreementText}>同意 隐私协议、用户协议</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    ) : (
+        <View style={styles.LoginPageView}>
+            <View style={styles.KefuImageView}>
+                <Image source={require('../assets/kefu.png')} style={styles.KefuImageStyle} />
+            </View>
+
+            <View style={styles.CompanyInfo}>
+                <CompanyInfo title="MAMMOTION" image={require('../assets/m.png')} />
+            </View>
+
+            <View>
+                <TextInput
+                    style={styles.MailAddressInput}
+                    onChangeText={onChangeAddress}
+                    value={string}
+                    placeholder="邮箱地址"
+                    keyboardType="numeric"
+                />
+                <TextInput
+                    style={styles.PasswordInput}
+                    onChangeText={onChangeNumber}
+                    value={number}
+                    placeholder="请输入密码"
+                    keyboardType="numeric"
+                />
+            </View>
+
+            <View style={styles.LoginViewButton}>
+                <Text style={styles.LoginButton} onPress={() => Alert.alert('登录成功！')}>
+                    登录
+                </Text>
+            </View>
+
+            <View style={styles.PasswordViewButton}>
+                <Text style={styles.ForgetPasswordButton} onPress={() => Alert.alert('密码重置成功！')}>
+                    忘记密码
+                </Text>
+                <Text style={styles.RegisterButton} onPress={() => Alert.alert('注册成功！')}>
+                    注册
+                </Text>
+            </View>
+
+            <View style={styles.OtherLoginMethods}>
+                <View style={styles.OtherLoginTextView}>
+                    <View style={styles.line} />
+                    <Text style={styles.OtherLoginText}>
+                        其他登录方式
+                    </Text>
+                    <View style={styles.line} />
+                </View>
+
+                <View style={styles.OtherLoginImageStyleView}>
+                    <OtherLoginMethods method="谷歌" image={require('../assets/guge.png')} />
+                </View>
+            </View>
+
+            <View>
+                <TouchableOpacity
+                    style={styles.AgreementContainer}
+                    onPress={() => setIsAgreed(!isAgreed)}
+                    activeOpacity={0.8}
+                >
+                    <View style={styles.radioBox}>
+                        {isAgreed && (
+                            <Image
+                                source={require('../assets/agree.png')}
+                                style={styles.checkIcon}
+                                resizeMode="contain"
+                            />
+                        )}
+                    </View>
+                    <Text style={styles.AgreementText}>同意 隐私协议、用户协议</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+}
+
+export default App
