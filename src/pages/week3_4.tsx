@@ -104,10 +104,11 @@ const styles = StyleSheet.create({
     },
     PasswordInput: {
         backgroundColor: 'white',
-        marginTop: '2%',
-        width: '85%',
+        marginTop: '3%',
+        marginLeft: 0,
+        width: '75%',
         height: 60,
-        borderRadius: 10,
+        borderRadius: 20,
         alignSelf: 'center',
         margin: 12,
         borderWidth: 1,
@@ -202,8 +203,8 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         //marginTop: '35%',
-        //marginLeft: '0%',
-        //marginRight: '10%',
+        marginLeft: '10%',
+        marginRight: '10%',
         //backgroundColor: 'red',
         alignSelf: 'center',
     },
@@ -233,6 +234,21 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: '#333',
         marginLeft: 8,
+    },
+    passwordInputContainer: {
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        padding: 0,
+        width: '85%',
+        marginLeft: '7%',
+        borderRadius: 10,
+        height: 60,
+    },
+    yincangImage: {
+        width: 20,
+        height: 20,
+        alignSelf: 'center',
+        marginLeft: 30,
     },
 
 })
@@ -265,30 +281,18 @@ function App() {
                     placeholder="邮箱地址"
                     keyboardType="email-address"
                 />
-                <View>
+                <View style={styles.passwordInputContainer}>
                     <TextInput
                         style={styles.PasswordInput}
                         onChangeText={onChangeNumber}
                         value={password}
                         placeholder="请输入密码"
                         keyboardType="default"
-                    />
 
-                    <TouchableOpacity
-                        style={styles.AgreementContainer}
-                        onPress={() => setIsHiden(!isHidden)}
-                        activeOpacity={0.8}
-                    >
-                        <View style={styles.radioBox}>
-                            {isAgreed && (
-                                <Image
-                                    source={require('../assets/xianshikejian.png')}
-                                    style={styles.checkIcon}
-                                    resizeMode="contain"
-                                />
-                            )}
-                        </View>
-                    </TouchableOpacity>
+                    />
+                    <Image style={styles.yincangImage} source={require('../assets/yincang.png')} />
+
+
 
                 </View>
 
@@ -344,25 +348,25 @@ function App() {
                             />
                         )}
                     </View>
+                    <View style={styles.AgreementText}>
+                        <Text>
+                            同意
+                        </Text>
+                        <TouchableOpacity onPress={() => Alert.alert('使用TO跳转至隐私协议')} >
+                            <Text style={{ color: '#5382e2ff' }}>
+                                隐私协议
+                            </Text>
+                        </TouchableOpacity>
+                        <Text>
+                            、
+                        </Text>
+                        <TouchableOpacity onPress={() => Alert.alert('使用TO跳转至用户协议')} >
+                            <Text style={{ color: '#5382e2ff' }}>
+                                用户协议
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </TouchableOpacity>
-                <View style={styles.AgreementText}>
-                    <Text>
-                        同意
-                    </Text>
-                    <TouchableOpacity onPress={() => Alert.alert('使用TO跳转至隐私协议')} >
-                        <Text style={{ color: '#5382e2ff' }}>
-                            隐私协议
-                        </Text>
-                    </TouchableOpacity>
-                    <Text>
-                        、
-                    </Text>
-                    <TouchableOpacity onPress={() => Alert.alert('使用TO跳转至用户协议')} >
-                        <Text style={{ color: '#5382e2ff' }}>
-                            用户协议
-                        </Text>
-                    </TouchableOpacity>
-                </View>
             </View>
         </View>
     );
