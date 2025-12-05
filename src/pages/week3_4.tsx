@@ -19,8 +19,6 @@ interface CompanyInfoProps {
     image: ImageSourcePropType
 }
 
-
-
 const CompanyInfo = ({ title, image }: CompanyInfoProps) => {
     return (
         <View style={styles.CompanyInfo}>
@@ -40,9 +38,9 @@ interface OtherLoginMethodsProps {
 
 const OtherLoginMethods = ({ method, image }: OtherLoginMethodsProps) => {
     return (
-        <View style={styles.OtherLoginMethods}>
+        <TouchableOpacity onPress={() => Alert.alert('使用TO跳转到' + method)}>
             <Image source={image} style={styles.OtherLoginImageStyle} />
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -159,6 +157,17 @@ const styles = StyleSheet.create({
         //backgroundColor:'red'
         fontSize: 16,
     },
+    LoginMethodPress: {
+        height: 80,
+        //alignItems: 'center',
+        //justifyContent: 'center',
+        marginVertical: 5,
+        //paddingHorizontal: 10,
+        marginRight: '0%',
+        marginLeft: '20%',
+        //backgroundColor:'red'
+
+    },
     OtherLoginMethods: {
         alignItems: 'center',
         //backgroundColor: 'red',
@@ -193,8 +202,8 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         //marginTop: '35%',
-        marginLeft: '10%',
-        marginRight: '10%',
+        //marginLeft: '0%',
+        //marginRight: '10%',
         //backgroundColor: 'red',
         alignSelf: 'center',
     },
@@ -220,6 +229,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     AgreementText: {
+        flexDirection: 'row',
         fontSize: 15,
         color: '#333',
         marginLeft: 8,
@@ -232,11 +242,12 @@ const styles = StyleSheet.create({
 //function begins
 function App() {
 
-    const [string, onChangeAddress] = React.useState('');
-    const [number, onChangeNumber] = React.useState('');
+    const [address, onChangeAddress] = React.useState('');
+    const [password, onChangeNumber] = React.useState('');
     const [isAgreed, setIsAgreed] = useState(false);
+    const [isHidden, setIsHiden] = useState(true);
 
-    return Platform.OS === 'ios' ? (
+    return (
         <View style={styles.LoginPageView}>
             <View style={styles.KefuImageView}>
                 <Image source={require('../assets/kefu.png')} style={styles.KefuImageStyle} />
@@ -250,32 +261,56 @@ function App() {
                 <TextInput
                     style={styles.MailAddressInput}
                     onChangeText={onChangeAddress}
-                    value={string}
+                    value={address}
                     placeholder="邮箱地址"
-                    keyboardType="numeric"
+                    keyboardType="email-address"
                 />
-                <TextInput
-                    style={styles.PasswordInput}
-                    onChangeText={onChangeNumber}
-                    value={number}
-                    placeholder="请输入密码"
-                    keyboardType="numeric"
-                />
-            </View>
+                <View>
+                    <TextInput
+                        style={styles.PasswordInput}
+                        onChangeText={onChangeNumber}
+                        value={password}
+                        placeholder="请输入密码"
+                        keyboardType="default"
+                    />
 
-            <View style={styles.LoginViewButton}>
-                <Text style={styles.LoginButton} onPress={() => Alert.alert('登录成功！')}>
+                    <TouchableOpacity
+                        style={styles.AgreementContainer}
+                        onPress={() => setIsHiden(!isHidden)}
+                        activeOpacity={0.8}
+                    >
+                        <View style={styles.radioBox}>
+                            {isAgreed && (
+                                <Image
+                                    source={require('../assets/xianshikejian.png')}
+                                    style={styles.checkIcon}
+                                    resizeMode="contain"
+                                />
+                            )}
+                        </View>
+                    </TouchableOpacity>
+
+                </View>
+
+
+            </View>
+            <TouchableOpacity style={styles.LoginViewButton} onPress={() => Alert.alert('使用TO登录成功！')}>
+                <Text style={styles.LoginButton} >
                     登录
                 </Text>
-            </View>
+            </TouchableOpacity>
 
             <View style={styles.PasswordViewButton}>
-                <Text style={styles.ForgetPasswordButton} onPress={() => Alert.alert('密码重置成功！')}>
-                    忘记密码
-                </Text>
-                <Text style={styles.RegisterButton} onPress={() => Alert.alert('注册成功！')}>
-                    注册
-                </Text>
+                <TouchableOpacity onPress={() => Alert.alert('使用TO密码重置成功!')} style={styles.ForgetPasswordButton}>
+                    <Text >
+                        忘记密码
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => Alert.alert('使用TO注册成功!')} style={styles.RegisterButton}>
+                    <Text >
+                        注册
+                    </Text>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.OtherLoginMethods}>
@@ -286,7 +321,6 @@ function App() {
                     </Text>
                     <View style={styles.line} />
                 </View>
-
                 <View style={styles.OtherLoginImageStyleView}>
                     <OtherLoginMethods method="谷歌" image={require('../assets/guge.png')} />
                     <OtherLoginMethods method="苹果" image={require('../assets/pingguo.png')} />
@@ -308,83 +342,25 @@ function App() {
                             />
                         )}
                     </View>
-                    <Text style={styles.AgreementText}>同意 隐私协议、用户协议</Text>
                 </TouchableOpacity>
-            </View>
-        </View>
-    ) : (
-        <View style={styles.LoginPageView}>
-            <View style={styles.KefuImageView}>
-                <Image source={require('../assets/kefu.png')} style={styles.KefuImageStyle} />
-            </View>
-
-            <View style={styles.CompanyInfo}>
-                <CompanyInfo title="MAMMOTION" image={require('../assets/m.png')} />
-            </View>
-
-            <View>
-                <TextInput
-                    style={styles.MailAddressInput}
-                    onChangeText={onChangeAddress}
-                    value={string}
-                    placeholder="邮箱地址"
-                    keyboardType="numeric"
-                />
-                <TextInput
-                    style={styles.PasswordInput}
-                    onChangeText={onChangeNumber}
-                    value={number}
-                    placeholder="请输入密码"
-                    keyboardType="numeric"
-                />
-            </View>
-
-            <View style={styles.LoginViewButton}>
-                <Text style={styles.LoginButton} onPress={() => Alert.alert('登录成功！')}>
-                    登录
-                </Text>
-            </View>
-
-            <View style={styles.PasswordViewButton}>
-                <Text style={styles.ForgetPasswordButton} onPress={() => Alert.alert('密码重置成功！')}>
-                    忘记密码
-                </Text>
-                <Text style={styles.RegisterButton} onPress={() => Alert.alert('注册成功！')}>
-                    注册
-                </Text>
-            </View>
-
-            <View style={styles.OtherLoginMethods}>
-                <View style={styles.OtherLoginTextView}>
-                    <View style={styles.line} />
-                    <Text style={styles.OtherLoginText}>
-                        其他登录方式
+                <View style={styles.AgreementText}>
+                    <Text>
+                        同意
                     </Text>
-                    <View style={styles.line} />
+                    <TouchableOpacity onPress={() => Alert.alert('使用TO跳转至隐私协议')} >
+                        <Text style={{ color: '#5382e2ff' }}>
+                            隐私协议
+                        </Text>
+                    </TouchableOpacity>
+                    <Text>
+                        、
+                    </Text>
+                    <TouchableOpacity onPress={() => Alert.alert('使用TO跳转至用户协议')} >
+                        <Text style={{ color: '#5382e2ff' }}>
+                            用户协议
+                        </Text>
+                    </TouchableOpacity>
                 </View>
-
-                <View style={styles.OtherLoginImageStyleView}>
-                    <OtherLoginMethods method="谷歌" image={require('../assets/guge.png')} />
-                </View>
-            </View>
-
-            <View>
-                <TouchableOpacity
-                    style={styles.AgreementContainer}
-                    onPress={() => setIsAgreed(!isAgreed)}
-                    activeOpacity={0.8}
-                >
-                    <View style={styles.radioBox}>
-                        {isAgreed && (
-                            <Image
-                                source={require('../assets/agree.png')}
-                                style={styles.checkIcon}
-                                resizeMode="contain"
-                            />
-                        )}
-                    </View>
-                    <Text style={styles.AgreementText}>同意 隐私协议、用户协议</Text>
-                </TouchableOpacity>
             </View>
         </View>
     );
