@@ -323,7 +323,9 @@ function App() {
                 </View>
                 <View style={styles.OtherLoginImageStyleView}>
                     <OtherLoginMethods method="谷歌" image={require('../assets/guge.png')} />
-                    <OtherLoginMethods method="苹果" image={require('../assets/pingguo.png')} />
+                    {
+                        Platform.OS === "ios" ? <OtherLoginMethods method="苹果" image={require('../assets/pingguo.png')} /> : null
+                    }
                 </View>
             </View>
 
