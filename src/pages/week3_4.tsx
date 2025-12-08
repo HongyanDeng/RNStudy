@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
-    View, Text, Image,TextInput, TouchableOpacity, 
-    ImageSourcePropType,StyleSheet, Alert,Platform,
+    View, Text, Image, TextInput, TouchableOpacity,
+    ImageSourcePropType, StyleSheet, Alert, Platform,
 } from 'react-native'
 //import end
 
@@ -46,11 +46,12 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: 35,
         height: 35,
-        marginRight: '4%',
         alignSelf: 'flex-end',
+        justifyContent: 'center',
+        marginRight: '4%',
         ...Platform.OS === 'ios' ?
             {
-                marginTop: '10%',
+                marginTop: '12%',
             } :
             {
                 marginTop: '3%',
@@ -58,62 +59,70 @@ const styles = StyleSheet.create({
     },
     KefuImageStyle: {
         alignSelf: 'center',
-        margin: 'auto',
         width: 25,
         height: 25,
     },
-   CompanyInfo: {
-      
-   },
+    CompanyInfo: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 30,
+    },
     CompanyImageStyle: {
         width: 80,
         height: 80,
-        marginTop: '15%',
-        alignSelf: 'center',
     },
     CompanyTitle: {
         fontSize: 20,
-        textAlign: 'center',
-        marginTop: 10,
         fontWeight: 'bold',
         color: 'black',
         fontFamily: 'sense-serif',
     },
+    InputView: {
+        height: '18%',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+    },
     MailAddressInput: {
         backgroundColor: 'white',
-        marginTop: '15%',
-        width: '85%',
-        height: 60,
+        width: '90%',
+        height: 55,
         borderRadius: 10,
-        alignSelf: 'center',
-        margin: 12,
         borderWidth: 1,
         borderColor: 'rgba(109, 90, 90, 0)',
         padding: 10,
         fontSize: 18,
+    },
+    passwordInputContainer: {
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        width: '90%',
+        borderRadius: 10,
+        height: 55,
     },
     PasswordInput: {
         backgroundColor: 'white',
-        marginTop: '3%',
-        marginLeft: 0,
-        width: '75%',
-        height: 60,
+        width: '80%',
+        height: 55,
         borderRadius: 20,
-        alignSelf: 'center',
-        margin: 12,
         borderWidth: 1,
         borderColor: 'rgba(109, 90, 90, 0)',
         padding: 10,
         fontSize: 18,
     },
+    yincangImage: {
+        width: 20,
+        height: 20,
+        marginLeft: 30,
+        margin: 'auto',
+    },
     LoginViewButton: {
-        marginTop: '12%',
-        width: '85%',
-        height: 60,
-        borderRadius: 20,
+        marginTop: '8%',
+        width: '90%',
+        height: 55,
+        borderRadius: 10,
         backgroundColor: 'black',
         alignSelf: 'center',
-
     },
     LoginButton: {
         color: 'white',
@@ -121,62 +130,49 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         width: '90%',
-        height: 'auto',
         padding: 13,
     },
     PasswordViewButton: {
         flexDirection: 'row',
+        padding: 12,
     },
     ForgetPasswordButton: {
-        marginLeft: '7.5%',
+        marginLeft: '3%',
         color: 'black',
-        padding: 13,
         fontSize: 16,
     },
     RegisterButton: {
-        padding: 13,
         marginLeft: 'auto',
-        marginRight: '7.5%',
+        marginRight: '3%',
         color: 'black',
         fontSize: 16,
     },
-    LoginMethodPress: {
-        height: 80,
-        marginVertical: 5,
-        marginRight: '0%',
-        marginLeft: '20%',
-    },
     OtherLoginMethods: {
         alignItems: 'center',
-        height: 100,
-        marginTop: '5%',
+        height: 150,
+        padding: 10,
     },
     OtherLoginTextView: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        marginVertical: 20
+        marginVertical: 25,
     },
     line: {
         flex: 1,
         height: 1,
         backgroundColor: '#c6c3c3ff',
-        marginHorizontal: 12,
     },
     OtherLoginText: {
         fontSize: 16
     },
     OtherLoginImageStyleView: {
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginVertical: 0
     },
     OtherLoginImageStyle: {
         width: 50,
         height: 50,
-        marginLeft: '10%',
-        marginRight: '10%',
+        marginLeft: '8%',
+        marginRight: '8%',
         alignSelf: 'center',
     },
     AgreementContainer: {
@@ -206,34 +202,18 @@ const styles = StyleSheet.create({
         color: '#333',
         marginLeft: 8,
     },
-    passwordInputContainer: {
-        flexDirection: 'row',
-        backgroundColor: 'white',
-        padding: 0,
-        width: '85%',
-        marginLeft: '7%',
-        borderRadius: 10,
-        height: 60,
-    },
-    yincangImage: {
-        width: 20,
-        height: 20,
-        alignSelf: 'center',
-        marginLeft: 30,
-        margin: 'auto',
-    },
-
+    AgreementButton:{
+        color: '#5382e2ff',
+        textDecorationLine: 'underline'
+    }
 })
 //styles end
-
-
 //function begins
 function App() {
 
     const [address, setAddress] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [isAgreed, setIsAgreed] = useState(false);
-    const [isHidden, setIsHidden] = useState(false);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     // 切换密码显隐状态
     const togglePasswordVisibility = () => {
@@ -242,7 +222,7 @@ function App() {
 
     return (
         <View style={styles.LoginPageView}>
-            <TouchableOpacity style={styles.KefuImageView} onPress={()=>Alert.alert('跳转到客服页面')}>
+            <TouchableOpacity style={styles.KefuImageView} onPress={() => Alert.alert('跳转到客服页面')}>
                 <Image source={require('../assets/kefu.png')} style={styles.KefuImageStyle} />
             </TouchableOpacity>
 
@@ -250,7 +230,7 @@ function App() {
                 <CompanyInfo title="MAMMOTION" image={require('../assets/m.png')} />
             </View>
 
-            <View>
+            <View style={styles.InputView}>
                 <TextInput
                     style={styles.MailAddressInput}
                     onChangeText={setAddress}
@@ -332,7 +312,7 @@ function App() {
                             同意
                         </Text>
                         <TouchableOpacity onPress={() => Alert.alert('跳转至隐私协议')} >
-                            <Text style={{ color: '#5382e2ff' }}>
+                            <Text style={styles.AgreementButton}>
                                 隐私协议
                             </Text>
                         </TouchableOpacity>
@@ -340,7 +320,7 @@ function App() {
                             、
                         </Text>
                         <TouchableOpacity onPress={() => Alert.alert('跳转至用户协议')} >
-                            <Text style={{ color: '#5382e2ff' }}>
+                            <Text style={styles.AgreementButton}>
                                 用户协议
                             </Text>
                         </TouchableOpacity>
