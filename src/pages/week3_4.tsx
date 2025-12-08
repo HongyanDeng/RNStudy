@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import {
-    View, Text, Image,
-    TextInput, ScrollView,
-    FlatList, TouchableOpacity,
-    TouchableWithoutFeedback, Button,
-    Switch, ImageSourcePropType,
-    StyleSheet, NativeModules,
-    ImagePropsBase,
-    Alert,
-    Platform,
+    View, Text, Image,TextInput, TouchableOpacity, 
+    ImageSourcePropType,StyleSheet, Alert,Platform,
 } from 'react-native'
 //import end
 
@@ -18,7 +11,6 @@ interface CompanyInfoProps {
     title: string;
     image: ImageSourcePropType
 }
-
 const CompanyInfo = ({ title, image }: CompanyInfoProps) => {
     return (
         <View style={styles.CompanyInfo}>
@@ -35,10 +27,9 @@ interface OtherLoginMethodsProps {
     method: string;
     image: ImageSourcePropType
 }
-
 const OtherLoginMethods = ({ method, image }: OtherLoginMethodsProps) => {
     return (
-        <TouchableOpacity onPress={() => Alert.alert('使用TO跳转到' + method)}>
+        <TouchableOpacity onPress={() => Alert.alert('跳转到' + method)}>
             <Image source={image} style={styles.OtherLoginImageStyle} />
         </TouchableOpacity>
     )
@@ -71,14 +62,13 @@ const styles = StyleSheet.create({
         width: 25,
         height: 25,
     },
-    CompanyInfo: {
-
-    },
+   CompanyInfo: {
+      
+   },
     CompanyImageStyle: {
         width: 80,
         height: 80,
         marginTop: '15%',
-        //backgroundColor: 'red',
         alignSelf: 'center',
     },
     CompanyTitle: {
@@ -126,10 +116,7 @@ const styles = StyleSheet.create({
 
     },
     LoginButton: {
-        //backgroundColor: 'blue',
         color: 'white',
-        //alignSelf: 'center',
-        //alignItems: 'center',
         margin: 'auto',
         fontSize: 20,
         textAlign: 'center',
@@ -139,49 +126,36 @@ const styles = StyleSheet.create({
     },
     PasswordViewButton: {
         flexDirection: 'row',
-        //marginTop: '3%',
-        //padding: 10,
     },
     ForgetPasswordButton: {
         marginLeft: '7.5%',
         color: 'black',
         padding: 13,
-        //backgroundColor:'red'
         fontSize: 16,
-
     },
     RegisterButton: {
         padding: 13,
         marginLeft: 'auto',
         marginRight: '7.5%',
         color: 'black',
-        //backgroundColor:'red'
         fontSize: 16,
     },
     LoginMethodPress: {
         height: 80,
-        //alignItems: 'center',
-        //justifyContent: 'center',
         marginVertical: 5,
-        //paddingHorizontal: 10,
         marginRight: '0%',
         marginLeft: '20%',
-        //backgroundColor:'red'
-
     },
     OtherLoginMethods: {
         alignItems: 'center',
-        //backgroundColor: 'red',
         height: 100,
         marginTop: '5%',
-
     },
     OtherLoginTextView: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 20
-
     },
     line: {
         flex: 1,
@@ -191,7 +165,6 @@ const styles = StyleSheet.create({
     },
     OtherLoginText: {
         fontSize: 16
-
     },
     OtherLoginImageStyleView: {
         flexDirection: 'row',
@@ -202,10 +175,8 @@ const styles = StyleSheet.create({
     OtherLoginImageStyle: {
         width: 50,
         height: 50,
-        //marginTop: '35%',
         marginLeft: '10%',
         marginRight: '10%',
-        //backgroundColor: 'red',
         alignSelf: 'center',
     },
     AgreementContainer: {
@@ -249,7 +220,6 @@ const styles = StyleSheet.create({
         height: 20,
         alignSelf: 'center',
         marginLeft: 30,
-        //backgroundColor:'red',
         margin: 'auto',
     },
 
@@ -272,9 +242,9 @@ function App() {
 
     return (
         <View style={styles.LoginPageView}>
-            <View style={styles.KefuImageView}>
+            <TouchableOpacity style={styles.KefuImageView} onPress={()=>Alert.alert('跳转到客服页面')}>
                 <Image source={require('../assets/kefu.png')} style={styles.KefuImageStyle} />
-            </View>
+            </TouchableOpacity>
 
             <View style={styles.CompanyInfo}>
                 <CompanyInfo title="MAMMOTION" image={require('../assets/m.png')} />
@@ -301,48 +271,25 @@ function App() {
                         autoCorrect={false}
 
                     />
-
-                    {/*<TouchableOpacity
-                        style={styles.AgreementContainer}
-                        onPress={() => setIsHidden(!isHidden)}
-                        activeOpacity={0.8}
-                    >
-                        <View style={styles.radioBox}>
-                            {isHidden && (
-                                <Image
-                                    source={require('../assets/xianshikejian.png')}
-                                    style={styles.checkIcon}
-                                    resizeMode="contain"
-                                />
-                            )}
-                        </View>
-
-                    </TouchableOpacity>*/}
-
                     <TouchableOpacity onPress={togglePasswordVisibility} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-                        <Image style={styles.yincangImage} source={isPasswordVisible ? require('../assets/xianshikejian.png') : require('../assets/yincang.png')} />
+                        <Image style={styles.yincangImage} source={isPasswordVisible ? require('../assets/show.png') : require('../assets/hidden.png')} />
                     </TouchableOpacity>
-
-
-
-
                 </View>
 
-
             </View>
-            <TouchableOpacity style={styles.LoginViewButton} onPress={() => Alert.alert('使用TO登录成功！')}>
+            <TouchableOpacity style={styles.LoginViewButton} onPress={() => Alert.alert('登录成功！')}>
                 <Text style={styles.LoginButton} >
                     登录
                 </Text>
             </TouchableOpacity>
 
             <View style={styles.PasswordViewButton}>
-                <TouchableOpacity onPress={() => Alert.alert('使用TO密码重置成功!')} style={styles.ForgetPasswordButton}>
+                <TouchableOpacity onPress={() => Alert.alert('密码重置成功!')} style={styles.ForgetPasswordButton}>
                     <Text >
                         忘记密码
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => Alert.alert('使用TO注册成功!')} style={styles.RegisterButton}>
+                <TouchableOpacity onPress={() => Alert.alert('注册成功!')} style={styles.RegisterButton}>
                     <Text >
                         注册
                     </Text>
@@ -358,9 +305,9 @@ function App() {
                     <View style={styles.line} />
                 </View>
                 <View style={styles.OtherLoginImageStyleView}>
-                    <OtherLoginMethods method="谷歌" image={require('../assets/guge.png')} />
+                    <OtherLoginMethods method="谷歌" image={require('../assets/google.png')} />
                     {
-                        Platform.OS === "ios" ? <OtherLoginMethods method="苹果" image={require('../assets/pingguo.png')} /> : null
+                        Platform.OS === "ios" ? <OtherLoginMethods method="苹果" image={require('../assets/apple.png')} /> : null
                     }
                 </View>
             </View>
@@ -384,7 +331,7 @@ function App() {
                         <Text>
                             同意
                         </Text>
-                        <TouchableOpacity onPress={() => Alert.alert('使用TO跳转至隐私协议')} >
+                        <TouchableOpacity onPress={() => Alert.alert('跳转至隐私协议')} >
                             <Text style={{ color: '#5382e2ff' }}>
                                 隐私协议
                             </Text>
@@ -392,7 +339,7 @@ function App() {
                         <Text>
                             、
                         </Text>
-                        <TouchableOpacity onPress={() => Alert.alert('使用TO跳转至用户协议')} >
+                        <TouchableOpacity onPress={() => Alert.alert('跳转至用户协议')} >
                             <Text style={{ color: '#5382e2ff' }}>
                                 用户协议
                             </Text>
