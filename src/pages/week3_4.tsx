@@ -249,6 +249,8 @@ const styles = StyleSheet.create({
         height: 20,
         alignSelf: 'center',
         marginLeft: 30,
+        //backgroundColor:'red',
+        margin: 'auto',
     },
 
 })
@@ -258,10 +260,15 @@ const styles = StyleSheet.create({
 //function begins
 function App() {
 
-    const [address, onChangeAddress] = React.useState('');
-    const [password, onChangeNumber] = React.useState('');
+    const [address, setAddress] = React.useState('');
+    const [password, setPassword] = React.useState('');
     const [isAgreed, setIsAgreed] = useState(false);
-    const [isHidden, setIsHiden] = useState(true);
+    const [isHidden, setIsHidden] = useState(false);
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    // 切换密码显隐状态
+    const togglePasswordVisibility = () => {
+        setIsPasswordVisible(!isPasswordVisible);
+    };
 
     return (
         <View style={styles.LoginPageView}>
@@ -276,7 +283,7 @@ function App() {
             <View>
                 <TextInput
                     style={styles.MailAddressInput}
-                    onChangeText={onChangeAddress}
+                    onChangeText={setAddress}
                     value={address}
                     placeholder="邮箱地址"
                     keyboardType="email-address"
@@ -284,13 +291,38 @@ function App() {
                 <View style={styles.passwordInputContainer}>
                     <TextInput
                         style={styles.PasswordInput}
-                        onChangeText={onChangeNumber}
+                        onChangeText={setPassword}
                         value={password}
                         placeholder="请输入密码"
                         keyboardType="default"
+                        secureTextEntry={!isPasswordVisible}
+                        textContentType="password"
+                        autoCapitalize="none"
+                        autoCorrect={false}
 
                     />
-                    <Image style={styles.yincangImage} source={require('../assets/yincang.png')} />
+
+                    {/*<TouchableOpacity
+                        style={styles.AgreementContainer}
+                        onPress={() => setIsHidden(!isHidden)}
+                        activeOpacity={0.8}
+                    >
+                        <View style={styles.radioBox}>
+                            {isHidden && (
+                                <Image
+                                    source={require('../assets/xianshikejian.png')}
+                                    style={styles.checkIcon}
+                                    resizeMode="contain"
+                                />
+                            )}
+                        </View>
+
+                    </TouchableOpacity>*/}
+
+                    <TouchableOpacity onPress={togglePasswordVisibility} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+                        <Image style={styles.yincangImage} source={isPasswordVisible ? require('../assets/xianshikejian.png') : require('../assets/yincang.png')} />
+                    </TouchableOpacity>
+
 
 
 
