@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     MailAddressInput: {
         backgroundColor: 'white',
         width: '90%',
-        height: 55,
+        height:'35%',
         borderRadius: 10,
         borderWidth: 1,
         borderColor: 'rgba(109, 90, 90, 0)',
@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         width: '90%',
         borderRadius: 10,
-        height: 55,
+        height: '35%',
     },
     PasswordInput: {
         backgroundColor: 'white',
         width: '80%',
-        height: 55,
+        height:'100%',
         borderRadius: 20,
         borderWidth: 1,
         borderColor: 'rgba(109, 90, 90, 0)',
@@ -249,7 +249,6 @@ function App() {
                         textContentType="password"
                         autoCapitalize="none"
                         autoCorrect={false}
-
                     />
                     <TouchableOpacity onPress={togglePasswordVisibility} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
                         <Image style={styles.yincangImage} source={isPasswordVisible ? require('../assets/show.png') : require('../assets/hidden.png')} />
